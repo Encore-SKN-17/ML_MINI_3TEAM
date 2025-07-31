@@ -29,9 +29,8 @@
 | **분류**         | **기술/도구**                                                                            |
 |------------------|------------------------------------------------------------------------------------------|
 | **언어**         | ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python)     |
-| **라이브러리**   | ![NumPy](https://img.shields.io/badge/numpy-013243?style=for-the-badge&logo=numpy)       ![Pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas)   ![Matplotlib](https://img.shields.io/badge/Matplotlib-ffffff?style=for-the-badge&logo=Matplotlib) <br> ![Seaborn](https://img.shields.io/badge/seaborn-0C5A5A?style=for-the-badge&logo=Seaborn) ![scikitlearn](https://img.shields.io/badge/scikitlearn-green?style=for-the-badge&logo=scikitlearn)
-  |
-| **협업 툴**      | ![GitHub](https://img.shields.io/badge/github-121011?style=for-the-badge&logo=github)   ![Git](https://img.shields.io/badge/git-F05033?style=for-the-badge&logo=git)          |
+| **라이브러리**   | ![NumPy](https://img.shields.io/badge/numpy-013243?style=for-the-badge&logo=numpy)       ![Pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas)   ![Matplotlib](https://img.shields.io/badge/Matplotlib-ffffff?style=for-the-badge&logo=Matplotlib) <br> ![Seaborn](https://img.shields.io/badge/seaborn-0C5A5A?style=for-the-badge&logo=Seaborn) ![scikitlearn](https://img.shields.io/badge/scikitlearn-green?style=for-the-badge&logo=scikitlearn)|
+| **협업 툴**      | ![GitHub](https://img.shields.io/badge/github-121011?style=for-the-badge&logo=github)   ![Git](https://img.shields.io/badge/git-F05033?style=for-the-badge&logo=git)|
 
 <br>
 
@@ -42,26 +41,33 @@
 
 <img width="700" height="300" alt="Image" src="./figure/background.png" />
 
-프로젝트 주제 선정 배경
-중고차 시장은 해마다 규모가 커지고 있으며, 차량의 연식, 주행거리, 연료 타입, 브랜드, 모델 등 다양한 요인에 따라 가격이 크게 달라집니다. 그러나 일반 소비자 입장에서는 이러한 요인들이 가격에 어떤 영향을 미치는지 직관적으로 파악하기 어렵습니다. 따라서, 차량의 주요 특성을 바탕으로 가격을 예측하는 모델을 만든다면 구매자와 판매자 모두에게 유용한 도구가 될 수 있습니다.
+중고차 시장은 해마다 성장하고 있으며, 차량의 연식, 주행거리, 연료 유형, 브랜드, 모델 등 다양한 요인이 차량 가격에 복합적으로 작용합니다. 하지만 일반 소비자 입장에서는 이러한 요인 각각이 가격에 미치는 영향을 직관적으로 이해하거나 정량적으로 판단하기 어렵습니다. 이에 따라 중고차 거래 과정에서는 정보의 비대칭이 발생하고, 이는 구매자와 판매자 모두에게 불리한 의사결정으로 이어질 수 있습니다.
 
-이 프로젝트는 다음과 같은 동기에서 시작되었습니다:
+본 프로젝트는 다음과 같은 가설을 전제로 시작되었습니다:
 
-데이터 기반 의사결정: 감에 의존한 중고차 가격 책정이 아닌, 데이터를 기반으로 한 합리적인 판단 도출
+"중고차 가격은 차량의 연식, 주행거리, 연료 종류, 브랜드 등 주요 특성에 따라 예측 가능하며, 이러한 변수들은 가격 결정에 통계적으로 유의미한 영향을 미친다."
 
-실생활과의 연관성: 실제 거래가 이뤄지는 중고차 시장과 연결된 주제로, 실용성과 적용 가능성이 높음
+이 가설을 바탕으로, 데이터를 수집하고 정제한 뒤 머신러닝 기반 회귀 모델을 통해 중고차 가격에 영향을 주는 요인을 분석하고자 합니다. 단순한 가격 예측을 넘어서, 어떤 요인이 얼마나 영향을 주는지를 파악함으로써 시장 참여자들에게 실질적인 통찰을 제공하는 것이 목표입니다.
 
-회귀 문제 접근: 다중 변수 회귀 모델 학습 및 성능 비교를 위한 이상적인 사례 제공
+이 프로젝트는 다음과 같은 동기에서 출발하였습니다:
 
-이를 통해 다양한 회귀 모델(랜덤포레스트, 그래디언트 부스팅 등)의 성능을 비교하고, 모델의 해석 가능성과 예측력을 높이는 방법을 실습할 수 있었습니다.
+- **데이터 기반 의사결정**: 경험과 감에 의존한 중고차 가격 책정이 아닌, 데이터를 기반으로 한 합리적인 기준 제시
 
-판매가격과 주행거리를 확인한 결과, 중고차 판매자가 게시한 가격은 평균 748만3000원 수준이나 실제 취득가액은 평균 2129만6000원으로 2.8배 비쌌다.
-출처 - https://www.mk.co.kr/news/business/10203008
+- **실생활과의 높은 연관성**: 실제 거래가 이뤄지는 시장 데이터를 분석함으로써 실용성과 적용 가능성 확보
+
+- **회귀 문제로서의 적절성**: 다양한 수치형 및 범주형 변수를 포함하고 있어, 다변량 회귀 분석의 전형적인 사례로 활용 가능
+
+또한, 매일경제 보도에 따르면 중고차 판매자가 게시한 평균 가격은 약 748만 원이지만, 실제 구매 가격은 평균 2,129만 원으로 약 2.8배의 차이를 보이고 있습니다. 이러한 가격 차이는 투명하고 근거 기반의 가격 산정 시스템의 필요성을 더욱 부각시키며, 본 프로젝트의 실효성을 뒷받침합니다. [출처](https://www.mk.co.kr/news/business/10203008)
 
 <br>
 
 ### 1.2 프로젝트 목적
-중고차 시장의 투명성과 효율성을 높이기 위해, 다양한 차량 특성(연식, 주행거리, 연료, 브랜드 등) 데이터를 기반으로 중고차 가격을 예측하는 머신러닝 모델을 개발합니다. 이를 통해 합리적인 가격 산정과 소비자·판매자 모두에게 도움이 되는 인사이트를 제공합니다.
+본 프로젝트의 목적은 다음과 같습니다:
+
+- 모델 개발 및 비교: 다양한 머신러닝 회귀 모델을 활용하여 예측 성능을 비교하고, 가장 효과적인 모델을 도출
+
+- 시장 참여자 지원: 중고차 구매자와 판매자 모두가 활용할 수 있는 가격 예측 기준을 제시하여, 시장의 투명성과 효율성을 향상
+
 
 <br>
 
@@ -96,7 +102,7 @@
 - `Selling_type` : 판매자 유형 (딜러, 개인)
 - `Owner` : 차량을 거친 소유자 수
 
-
+<br>
 
 ## 3. 데이터 기초 통계량
 
@@ -111,6 +117,7 @@
 | 75%   | 2016  | 6.0                       | 9.9                        | 48,767     | 0            |
 | Max   | 2018  | 35.0                      | 92.6                       | 500,000    | 3            |
 
+<br>
 
 ## 4. 데이터 전처리 및 EDA (탐색적 데이터 분석)
 
@@ -199,7 +206,7 @@
 
 <img width="400" height="350" alt="Image" src="./figure/heat_map_strong.png" />
 
----
+<br>
 
 ### 5. 머신러닝 파이프라인
 
@@ -246,11 +253,11 @@
 
 - 최적의 변수 조합과 모델 선정, 교차검증 결과를 통해 최종 성능 평가
 
----
+<br>
 
 ## 6. 최종 인사이트 및 정책적 제언
 
-### 양의 상관 관계
+#### 상관 관계
 - Present_Price – Selling_Price : 0.88
 	- Present_Price(시장가)가 높을 수록 Selling_Price(실거래가) 역시 높게 형성 됨.
 
@@ -267,7 +274,7 @@
    2. 차량 품질 인증 및 관리 시스템 구축으로 소비자 보호 및 시장 효율성 제고
    3. 데이터 기반 중고차 거래 플랫폼 활성화
 
----
+<br>
 
 ### 7. 한계점
 
