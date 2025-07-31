@@ -20,7 +20,6 @@
 <br>
 
 
-
 ## 🛠️ **기술 스택**
 
 | **분류**   | **기술/도구**                                                                                       |
@@ -30,12 +29,14 @@
 | **라이브러리**   | ![NumPy](https://img.shields.io/badge/numpy-013243?style=for-the-badge&logo=numpy)       ![Pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas)   ![Matplotlib](https://img.shields.io/badge/Matplotlib-ffffff?style=for-the-badge&logo=Matplotlib)  |
 | **협업 툴**      | ![GitHub](https://img.shields.io/badge/github-121011?style=for-the-badge&logo=github)   ![Git](https://img.shields.io/badge/git-F05033?style=for-the-badge&logo=git)          |
 
-<br>                                      |
+<br>
 
 
-# 📄 **프로젝트 설명**
+## 1. 프로젝트 개요
 
-### 0. 프로젝트 주제 선정 배경
+### 1.1 프로젝트 주제 선정 배경
+
+<img width="500" height="200" alt="Image" src="./figure/background.png" />
 
 프로젝트 주제 선정 배경
 중고차 시장은 해마다 규모가 커지고 있으며, 차량의 연식, 주행거리, 연료 타입, 브랜드, 모델 등 다양한 요인에 따라 가격이 크게 달라집니다. 그러나 일반 소비자 입장에서는 이러한 요인들이 가격에 어떤 영향을 미치는지 직관적으로 파악하기 어렵습니다. 따라서, 차량의 주요 특성을 바탕으로 가격을 예측하는 모델을 만든다면 구매자와 판매자 모두에게 유용한 도구가 될 수 있습니다.
@@ -55,26 +56,23 @@
 
 <br>
 
-#### 프로젝트 목적
+### 1.2 프로젝트 목적
 중고차 시장의 투명성과 효율성을 높이기 위해, 다양한 차량 특성(연식, 주행거리, 연료, 브랜드 등) 데이터를 기반으로 중고차 가격을 예측하는 머신러닝 모델을 개발합니다. 이를 통해 합리적인 가격 산정과 소비자·판매자 모두에게 도움이 되는 인사이트를 제공합니다.
 
 <br>
 
 
-### 1. 데이터 선택 근거
+## 2. 데이터 선택 및 구조
 
-* 국내외 중고차 거래 플랫폼 및 공개된 자동차 데이터셋에서 차량별 특성 및 거래 가격 데이터 수집
-* 다양한 브랜드, 차종, 연식, 주행거리, 연료, 변속기 등 주요 변수 포함
-
-**데이터 출처**
-- KAGGLE, 국내 중고차 거래 사이트, 자동차 제조사 공개 데이터
-- 공공데이터포털 자동차 등록정보
+### 1.1 데이터 출처
+- KAGGLE Car price prediction(used cars) 데이터셋
+(https://www.kaggle.com/datasets/vijayaadithyanvg/car-price-predictionused-cars?resource=download)
 
 <br>
 
 ---
 
-### 2. 데이터 구조
+### 1.2. 데이터 구조
 
 #### **분석 타겟 컬럼**
 - `Selling_Price` : 중고차 거래 가격 (예측 대상)
@@ -91,7 +89,7 @@
 
 ---
 
-### 3. 데이터 기초 통계량
+## 3. 데이터 기초 통계량
 
 |       | price    | year     | mileage   | engine_size | brand   | fuel   |
 |-------|----------|----------|-----------|-------------|---------|--------|
@@ -106,16 +104,15 @@
 
 ---
 
-## 4. 데이터 전처리 및 통합
+## 4. 데이터 전처리 및 EDA (탐색적 데이터 분석)
 
-- 여러 소스에서 수집한 차량 데이터를 pandas로 통합
-- 결측치 및 이상치 처리, 단위 통일, 변수명 정제 등 전처리 수행
+- 이상치 제거, 파생변수 생성, 필요한 변수 추출(drop)
 
 ### 4.1 데이터 조회
 
 수치형, 범주형 데이터 확인
 
-<img width="500" height="200" alt="Image" src="./figure/data_info.png" />
+<img width="300" height="200" alt="Image" src="./figure/data_info.png" />
 
 데이터 결측치 조회
 
@@ -136,70 +133,62 @@
         > `df.isnull().sum()` 결과, 결측값이 없어 별도 처리는 하지 않음
 
 
-데이터 이상치 조회
+수치형 데이터 이상치 조회
 
 <img width="800" height="250" alt="Image" src="./figure/ourlier.png" />
 
-이상치 처리 안함
+- 주행거리 이상치와 구매가 이상치는 분포에서 극단적인 값을 보여 제거
+- 극단적인 이상치는 차량의 특성을 대표하는 결정적인 요인이 아니며 회귀성능에 미칠 영향에 비해 중요한 요인이 아님
 
-- 분석에 필요한 변수만 추출하여 최종 데이터프레임 구성
-- merge 및 groupby를 이용하여 데이터프레임 전처리
-- 연식, 주행거리, 가격 등에서 극단값은 실제 시장 특성을 반영하는 것으로 판단하여 일부만 제거
-
+<br>
 수치형, 범주형 변수 조회
 
-<img width="800" height="250" alt="Image" src="./figure/num_cate.png" />
+<img width="500" height="150" alt="Image" src="./figure/num_cate.png" />
 
----
+### 4-2. 그래프 시각화
 
-### 4. 데이터 EDA (탐색적 데이터 분석)
-
-#### 4-1.  연도별 차량 수량과 평균 판매가 막대그래프
-
-<img width="800" height="250" alt="Image" src="./figure/year_count.png" />
-
-#### 4-2. 판매 가격에 따른 수량 막대그래프
+#### 판매 가격에 따른 수량 막대그래프
 
 <img width="800" height="250" alt="Image" src="./figure/sell_count.png" />
 
-#### 4-3. 수치형 변수들과 판매 가격 산점도
+#### 수치형 변수들과 판매 가격 산점도
 
 <img width="800" height="250" alt="Image" src="./figure/num_sell.png" />
 
-파생 변수: 자동차 나이
+- 차량 연식을 자동차 나이로 계산한 파생변수 생성
 
-#### 4-4. 연료 유형에 따른 판매 가격 분포
+#### 연료 유형에 따른 판매 가격 분포
 
 <img width="800" height="250" alt="Image" src="./figure/fuel_sell.png" />
 
 
-#### 4-5. 변속기 유형에 따른 판매 가격 분포
+#### 변속기 유형에 따른 판매 가격 분포
 
 <img width="800" height="250" alt="Image" src="./figure/tran_sell.png" />
 
 
-#### 4-6. 판매 유형에 따른 판매 가격 분포
+#### 판매 유형에 따른 판매 가격 분포
 
 <img width="800" height="250" alt="Image" src="./figure/selt_sell.png" />
 
 
-#### 4-7. 차량 모델별 판매량
+#### 차량 모델별 판매량
 
 <img width="800" height="250" alt="Image" src="./figure/car.png" />
 
-#### 4-8. Top 10 판매 차량 모델별 가격 분포
+#### Top 10 판매 차량 모델별 가격 분포
 
 <img width="800" height="250" alt="Image" src="./figure/car_sell.png" />
 
-파생 변수: Top 10 판매차량 모델 그룹 별 범주
+- Top 10 판매차량 모델 및 그 외 범주로 구성된 파생변수 생성
 
-#### 4-9. 수치형 변수들 간의 상관관계 히트맵
+#### 수치형 변수들 간의 상관관계 히트맵
 
-<img width="800" height="250" alt="Image" src="./figure/heat_map.png" />
+<img width="400" height="350" alt="Image" src="./figure/heat_map.png" />
 
-#### 4-10. 수치형 변수들 간의 강한 상관관계 히트맵(|r|>=0.1)
+#### 수치형 변수들 간의 강한 상관관계 히트맵(|r|>=0.1)
 
-<img width="800" height="250" alt="Image" src="./figure/heat_map_strong.png" />
+<img width="400" height="350" alt="Image" src="./figure/heat_map_strong.png" />
 
 ---
 
@@ -283,34 +272,16 @@
 	- Driven_kms(주행거리)가 많을수록 Present_Price(시장가)가 높아지는 경향이 보이긴 함.
 	- 그래프를 확인하면 대부분의 차량이 10만 km 이하에 몰려 있고, 이 구간에서도 판매가가 넓게 분포되어 있어 Year(연식), Car_Name_Grouped(차종) 등 여러 변수가 존재해 주행거리와 시장가 간엔 상관관계가 거의 없다고 보는게 타당함.
 
-### 음의 상관 관계
-- Year - Driven_kms : -0.52
-	- Year(연식)이 오래될수록 Driven_kms(주행 거리)가 많아지는 경향이 보임 
-
-- Year - Owner : -0.18
-	- 오래된 차일수록 소유자가 많이 바뀌는 경향이 조금 보임
-	- 다만 차를 장기간 보유하는 경우가 많아 상관 관계가 있다고 보기에 어려움.
-
-1. **연식과 가격**
-   - 최신 연식일수록 중고차 가격이 높은 경향이 뚜렷함  
-   - 소비자들에게 차량의 연식 정보 제공 및 관리 강화
-2. **주행거리와 가격**
-   - 주행거리가 많을수록 차량 가격이 떨어짐  
-   - 주행거리를 명확히 검증할 수 있는 인증 제도 도입 필요
-3. **브랜드 영향력**
-   - 특정 브랜드의 시장 점유율이 높음  
-   - 브랜드별 신뢰성 향상을 위한 품질 관리 기준 강화 필요
-4. **정책적 시사점**
+#### 정책적 시사점
    1. 투명한 가격 산정을 위한 가이드라인 제공  
-   2. 차량 품질 인증 및 관리 시스템 구축으로 소비자 보호 및 시장 효율성 제고 
+   2. 차량 품질 인증 및 관리 시스템 구축으로 소비자 보호 및 시장 효율성 제고
    3. 데이터 기반 중고차 거래 플랫폼 활성화
+
 ---
 
 ### 7. 한계점
 
 1. **데이터의 한계**
-
-   - 본 프로젝트는 공개 데이터셋을 기반으로 하여 실제 시장의 모든 특성을 충분히 반영하지 못함. 실제 중고차 거래에서는 사고 이력, 옵션, 정비 기록, 배기량, 소유자 변경 횟수 등 다양한 정보가 가격에 영향을 미치나, 본 데이터에는 이러한 변수들이 포함되어 있지 않음.
 
    - 데이터가 오래된 경우 연식 변수의 중요도가 시점에 따라 달라질 수 있음. 예를 들어, 2020년 데이터에서의 2018년식 차량과 2025년 데이터에서의 2018년식 차량은 시장에서 서로 다른 가치를 가질 수 있음. 
 
