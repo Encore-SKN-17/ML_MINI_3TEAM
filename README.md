@@ -2,9 +2,12 @@
 
 # **프로젝트 명 : 중고차 가격 예측 모델 개발** 🚗
 
-## 🌟**팀명**
+## 💡**팀명**
 
-## DBalance
+### DBalance
+
+조용한 팀원들과 활발한 에너지의 조합으로 만들어낸 ‘데시벨 밸런스’,
+그리고 다양한 DB에서 균형 잡힌 인사이트를 도출하겠다는 의미를 담았습니다.
 <br>
 
 ## 🌟 **팀원 소개**  
@@ -26,7 +29,8 @@
 | **분류**         | **기술/도구**                                                                            |
 |------------------|------------------------------------------------------------------------------------------|
 | **언어**         | ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python)     |
-| **라이브러리**   | ![NumPy](https://img.shields.io/badge/numpy-013243?style=for-the-badge&logo=numpy)       ![Pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas)   ![Matplotlib](https://img.shields.io/badge/Matplotlib-ffffff?style=for-the-badge&logo=Matplotlib)  |
+| **라이브러리**   | ![NumPy](https://img.shields.io/badge/numpy-013243?style=for-the-badge&logo=numpy)       ![Pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas)   ![Matplotlib](https://img.shields.io/badge/Matplotlib-ffffff?style=for-the-badge&logo=Matplotlib) <br> ![Seaborn](https://img.shields.io/badge/seaborn-0C5A5A?style=for-the-badge&logo=Seaborn) ![scikitlearn](https://img.shields.io/badge/scikitlearn-green?style=for-the-badge&logo=scikitlearn)
+  |
 | **협업 툴**      | ![GitHub](https://img.shields.io/badge/github-121011?style=for-the-badge&logo=github)   ![Git](https://img.shields.io/badge/git-F05033?style=for-the-badge&logo=git)          |
 
 <br>
@@ -36,7 +40,7 @@
 
 ### 1.1 프로젝트 주제 선정 배경
 
-<img width="500" height="200" alt="Image" src="./figure/background.png" />
+<img width="700" height="300" alt="Image" src="./figure/background.png" />
 
 프로젝트 주제 선정 배경
 중고차 시장은 해마다 규모가 커지고 있으며, 차량의 연식, 주행거리, 연료 타입, 브랜드, 모델 등 다양한 요인에 따라 가격이 크게 달라집니다. 그러나 일반 소비자 입장에서는 이러한 요인들이 가격에 어떤 영향을 미치는지 직관적으로 파악하기 어렵습니다. 따라서, 차량의 주요 특성을 바탕으로 가격을 예측하는 모델을 만든다면 구매자와 판매자 모두에게 유용한 도구가 될 수 있습니다.
@@ -64,45 +68,49 @@
 
 ## 2. 데이터 선택 및 구조
 
-### 1.1 데이터 출처
-- KAGGLE Car price prediction(used cars) 데이터셋
-(https://www.kaggle.com/datasets/vijayaadithyanvg/car-price-predictionused-cars?resource=download)
+### 1.1 데이터 선택
+본 프로젝트에서는 차량의 연식, 주행거리, 연료 타입, 모델 등의 정보를 포함하고 있으며, 실거래 가격(label)까지 명시된 중고차 데이터셋을 선택.
+
+- **다양한 차량 특성 반영**: 데이터셋에는 가격 결정에 영향을 줄 수 있는 다양한 변수(연식, 연료 종류, 변속기, 주행거리, 차량 모델 등)가 포함되어 있어, 가격에 영향을 미치는 요인을 종합적으로 분석 가능.
+
+
+- **회귀 모델 학습에 적합한 구조**: 다수의 연속형 및 범주형 변수가 혼합된 형태로 구성되어 있어, 다양한 회귀 알고리즘을 실험하고 비교하기에 적합한 구조를 갖춤.
+
+**데이터 출처**
+[![Kaggle](https://img.shields.io/badge/Kaggle-Dataset-blue?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/vijayaadithyanvg/car-price-predictionused-cars?resource=download)
 
 <br>
-
----
 
 ### 1.2. 데이터 구조
 
 #### **분석 타겟 컬럼**
-- `Selling_Price` : 중고차 거래 가격 (예측 대상)
+- `Selling_Price` : 중고차 실거래가 (예측 대상)
 
 #### **주요 변수**
 - `Car_Name` : 모델명
-- `Year` : 차량 연식
-- `Driven_kms` : 주행거리
+- `Year` : 차량 출시 연도
+- `Driven_kms` : 차량 누적 주행 거리
 - `Fuel_Type` : 연료 종류 (가솔린, 디젤, CNG 등)
 - `Transmission` : 변속기 종류 (수동, 자동)
-- `Present_Price` : 중고차 구매가
+- `Present_Price` : 중고차 시장가(시세)
 - `Selling_type` : 판매자 유형 (딜러, 개인)
-- `Owner` : 소유주 수
+- `Owner` : 차량을 거친 소유자 수
 
----
+
 
 ## 3. 데이터 기초 통계량
 
-|       | price    | year     | mileage   | engine_size | brand   | fuel   |
-|-------|----------|----------|-----------|-------------|---------|--------|
-| count | 10000    | 10000    | 10000     | 10000       | 10000   | 10000  |
-| mean  | 12,500,000| 2015     | 85,000    | 1,600       | 현대    | 가솔린 |
-| std   | 4,200,000| 4.2      | 38,000    | 400         | 다양    | 다양   |
-| min   | 2,000,000| 2000     | 5,000     | 800         | ...     | ...    |
-| 25%   | 9,000,000| 2012     | 60,000    | 1,400       | ...     | ...    |
-| 50%   | 12,000,000| 2016     | 80,000    | 1,600       | ...     | ...    |
-| 75%   | 15,000,000| 2019     | 110,000   | 2,000       | ...     | ...    |
-| max   | 40,000,000| 2023     | 300,000   | 5,000       | ...     | ...    |
+| 항목  | Year | Selling Price | Present Price | Driven KMs | Owner |
+|-------|------|----------------------------|----------------------------|------------|--------------|
+| Count | 301  | 301                        | 301                        | 301        | 301          |
+| Mean  | 2013.6 | 4.7                      | 7.6                        | 36,947.2   | 0.04         |
+| Std   | 2.9   | 5.1                       | 8.6                        | 38,886.9   | 0.25         |
+| Min   | 2003  | 0.1                       | 0.3                        | 500        | 0            |
+| 25%   | 2012  | 0.9                       | 1.2                        | 15,000     | 0            |
+| 50%   | 2014  | 3.6                       | 6.4                        | 32,000     | 0            |
+| 75%   | 2016  | 6.0                       | 9.9                        | 48,767     | 0            |
+| Max   | 2018  | 35.0                      | 92.6                       | 500,000    | 3            |
 
----
 
 ## 4. 데이터 전처리 및 EDA (탐색적 데이터 분석)
 
@@ -137,8 +145,9 @@
 
 <img width="800" height="250" alt="Image" src="./figure/ourlier.png" />
 
-- 주행거리 이상치와 구매가 이상치는 분포에서 극단적인 값을 보여 제거
-- 극단적인 이상치는 차량의 특성을 대표하는 결정적인 요인이 아니며 회귀성능에 미칠 영향에 비해 중요한 요인이 아님
+- 주행거리와 구매가격 분포에서 일부 샘플이 전체 데이터와 비교해 비정상적으로 큰 값을 가져 통계적으로 이상치로 판단.
+- 해당 이상치들은 전체 차량 시장의 일반적인 경향을 반영하지 않으며, 오히려 모델 성능을 왜곡할 우려가 있음.
+- 모델이 더 일반적인 패턴을 안정적으로 학습할 수 있도록 주행거리와 구매가격 분포에서 이상치 제거.
 
 <br>
 수치형, 범주형 변수 조회
@@ -149,7 +158,7 @@
 
 #### 판매 가격에 따른 수량 막대그래프
 
-<img width="800" height="250" alt="Image" src="./figure/sell_count.png" />
+<img width="550" height="250" alt="Image" src="./figure/sell_count.png" />
 
 #### 수치형 변수들과 판매 가격 산점도
 
@@ -159,26 +168,26 @@
 
 #### 연료 유형에 따른 판매 가격 분포
 
-<img width="800" height="250" alt="Image" src="./figure/fuel_sell.png" />
+<img width="500" height="250" alt="Image" src="./figure/fuel_sell.png" />
 
 
 #### 변속기 유형에 따른 판매 가격 분포
 
-<img width="800" height="250" alt="Image" src="./figure/tran_sell.png" />
+<img width="500" height="250" alt="Image" src="./figure/tran_sell.png" />
 
 
 #### 판매 유형에 따른 판매 가격 분포
 
-<img width="800" height="250" alt="Image" src="./figure/selt_sell.png" />
+<img width="500" height="250" alt="Image" src="./figure/selt_sell.png" />
 
 
 #### 차량 모델별 판매량
 
-<img width="800" height="250" alt="Image" src="./figure/car.png" />
+<img width="700" height="250" alt="Image" src="./figure/car.png" />
 
 #### Top 10 판매 차량 모델별 가격 분포
 
-<img width="800" height="250" alt="Image" src="./figure/car_sell.png" />
+<img width="600" height="250" alt="Image" src="./figure/car_sell.png" />
 
 - Top 10 판매차량 모델 및 그 외 범주로 구성된 파생변수 생성
 
@@ -223,43 +232,24 @@
 
 각 모델별로 다양한 하이퍼파라미터 후보군을 설정하여 성능을 비교함
 
-#### - 교차 검증 결과
-<div align="letf">
-  <img src="./figure/kcv.png" width="400">
-</div>
-- scoring은 neg_mean_squared_error를 사용함
-
-
 #### - 최종 변수 결과
 <div align="letf">
-  <img src="./figure/best_model.png" width="400">
+  <img src="./figure/best_model.png" width="600">
 </div>
-- 최적의 변수 조합과 모델 선정, 교차검증 결과를 통해 최종 성능 평가								   
-### 5. 최종 인사이트 및 활용 방안
-- **연식과 중고차 가격 간의 상관관계**
-  - 차량 연식이 최신일수록 중고차 가격이 높아짐 (상관계수: **0.72**)  
-  - 최신 연식 차량은 시장에서 더 높은 가치를 인정받고 있음을 확인
-- **주행거리와 중고차 가격 간의 상관관계**
-  - 차량의 주행거리가 많을수록 중고차 가격은 하락 (상관계수: **-0.68**)  
-  - 소비자들이 짧은 주행거리를 선호하는 경향 확인
-- **브랜드별 중고차 시장 점유율**
-  - 특정 브랜드가 전체 시장에서 큰 비중을 차지  
-  - 브랜드 인지도 및 신뢰도가 시장 점유율에 영향을 미침
-- **정책적 활용 방안**
-  - 소비자와 판매자 모두에게 명확한 가격 산정 기준 제공  
-  - 브랜드별 차량 관리 및 품질 인증 제도 도입  
-  - 연식과 주행거리 등 주요 변수에 따른 가격 가이드라인 제공으로 시장 투명성 향상
+
+#### - 교차 검증 결과
+<div align="letf">
+  <img src="./figure/kcv.png" width="700">
+</div>
+
+- scoring은 neg_mean_squared_error를 사용함
+
+- 최적의 변수 조합과 모델 선정, 교차검증 결과를 통해 최종 성능 평가
 
 ---
 
-### 6. 최종 인사이트 및 정책적 제언
-| 변수명         | 설명             | 의미           |
-|----------------|------------------|----------------|
-| Present_Price  | 현재 판매가      | 시장가(시세)   |
-| Selling_Price  | 실제 판매가      | 실거래가       |
-| Driven_kms     | 주행 거리        | 차량 누적 주행 거리 (km) |
-| Year           | 연식             | 차량 출시 연도 |
-| Owner          | 이전 소유자 수   | 차량을 거친 소유자 수 |
+## 6. 최종 인사이트 및 정책적 제언
+
 ### 양의 상관 관계
 - Present_Price – Selling_Price : 0.88
 	- Present_Price(시장가)가 높을 수록 Selling_Price(실거래가) 역시 높게 형성 됨.
