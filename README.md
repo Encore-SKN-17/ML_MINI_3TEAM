@@ -202,9 +202,15 @@
 
 <img width="400" height="350" alt="Image" src="./figure/heat_map.png" />
 
-#### 수치형 변수들 간의 강한 상관관계 히트맵(|r|>=0.1)
+#### 수치형 변수들 간의 강한 상관관계 히트맵(|r|>=0.2)
 
 <img width="400" height="350" alt="Image" src="./figure/heat_map_strong.png" />
+
+#### 주행거리와 판매가와의 상관관계 고찰
+
+<img width="400" height="350" alt="Image" src="./figure/car_group_drv.png" />
+
+<img width="250" height="200" alt="Image" src="./figure/corr.png" />
 
 <br>
 
@@ -244,30 +250,37 @@
   <img src="./figure/best_model.png" width="600">
 </div>
 
+<div align="letf">
+  <img src="./figure/inverse_scale.png" width="300">
+</div>
+
+
 #### - 교차 검증 결과
 <div align="letf">
-  <img src="./figure/kcv.png" width="700">
+  <img src="./figure/gb_score.png" width="700">
 </div>
 
 - scoring은 neg_mean_squared_error를 사용함
-
 - 최적의 변수 조합과 모델 선정, 교차검증 결과를 통해 최종 성능 평가
+- 교차검증 시 실제 스케일에 대한 평가가 결여되어 모델의 일반화 성능 확인 부족
 
 <br>
 
 ## 6. 최종 인사이트 및 정책적 제언
 
 #### 상관 관계
-- Present_Price – Selling_Price : 0.88
+- Present_Price – Selling_Price
 	- Present_Price(시장가)가 높을 수록 Selling_Price(실거래가) 역시 높게 형성 됨.
 
-- Year - Selling_Price : 0.24
-	- Year(연식)이 최근일수록 Selling_Price(실거래가)가 높아지는 경향이 보이긴 함
+- Year - Selling_Price
+	- Year(연식)이 최근일수록 Selling_Price(실거래가)가 높아지는 경향이 보임.
 	- 그러나 Car_Name_Grouped(차종), Driven_kms(주행거리) 등 다양한 변수가 많아 단일 변수로는 영향이 미미함.
 
-- Driven_kms - Present_Price : 0.20
+- Driven_kms - Present_Price
 	- Driven_kms(주행거리)가 많을수록 Present_Price(시장가)가 높아지는 경향이 보이긴 함.
-	- 그래프를 확인하면 대부분의 차량이 10만 km 이하에 몰려 있고, 이 구간에서도 판매가가 넓게 분포되어 있어 Year(연식), Car_Name_Grouped(차종) 등 여러 변수가 존재해 주행거리와 시장가 간엔 상관관계가 거의 없다고 보는게 타당함.
+	- 그래프를 확인하면 대부분의 차량이 10만 km 이하에 몰려 있고, 이 구간에서도 차량 별 판매가가 넓게 분포되어 있어
+    주행거리와 시장가 간엔 상관관계가 매우 약함.
+  - 하지만 차량 모델에 따른 주행거리와 시장가 간의 관계를 분석했을 때 대부분의 모델들이 주행거리에 따라 시장가가   감소하는 추세를 보임.
 
 #### 정책적 시사점
    1. 투명한 가격 산정을 위한 가이드라인 제공  
